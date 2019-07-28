@@ -46,18 +46,17 @@ def diff21(n):
 # temos problemas se o papagaio estiver falando
 # antes da 7 ou depois das 20
 def papagaio(falando, hora):
-  if falando and hora < 7 or hora > 20:
-    return True
-  if falando and hora >= 7 or hora <= 20:
+    if falando and (hora < 7 or hora > 20):
+        return True
     return False
-  if not falando:
-    return False
-
+  
 # F. dez
 # dados dois inteiros a e b
 # retorna True se um dos dois é 10 ou a soma é 10
 def dez(a, b):
-  return 
+  if a == 10 or b == 10 or (a+b)==10:
+    return True
+  return False
 
 # G. dista10
 # seja um inteiro n
@@ -67,7 +66,9 @@ def dez(a, b):
 # dista10(90) -> True
 # dista10(89) -> False
 def dista10(n):
-  return
+  if abs(100-n)<=10 or abs(200-n)<=10:
+    return True
+  return False
 
 # H. apaga
 # seja uma string s e um inteiro n
@@ -75,7 +76,7 @@ def dista10(n):
 # apaga('kitten', 1) -> 'ktten'
 # apaga('kitten', 4) -> 'kittn'
 def apaga(s, n):
-  return 
+  return s.replace(s[n], '')
 
 # I. troca
 # seja uma string s
@@ -85,8 +86,16 @@ def apaga(s, n):
 # troca('a') -> 'a'
 # troca('ab') -> 'ba'
 def troca(s):
-  return
+  if len(s) <= 1:
+    return s
+  else:
+    x = s[0]
+    z = s[len(s)-1]
+    y = s[1:len(s)-1]
+    ns = z + y + x
+    return ns
 
+    
 # Provided simple test() function used in main() to print
 # what each function returns vs. what it's supposed to return.
 def test(obtido, esperado):
