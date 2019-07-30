@@ -1,11 +1,11 @@
 def computador_escolhe_jogada(quantidadePecas, pecasRetirar):
 
-    print('É a vez do computador!')
-    print('Peças em jogo: {} | Peças permitidas retirar na rodada: {}'.format(quantidadePecas, pecasRetirar))
+    #print('É a vez do computador!')
+    #print('Peças em jogo: {} | Peças permitidas retirar na rodada: {}'.format(quantidadePecas, pecasRetirar))
 
     if quantidadePecas <= pecasRetirar:
 
-        print('O computador retirou: {}'.format(quantidadePecas))
+        print('O computador retirou: {}'.format(quantidadePecas if quantidadePecas > 1 else 'uma'))
         return quantidadePecas
 
     elif quantidadePecas > pecasRetirar:
@@ -28,24 +28,27 @@ def computador_escolhe_jogada(quantidadePecas, pecasRetirar):
 
 def usuario_escolhe_jogada (quantidadePecas, pecasRetirar):
 
-    print('É a sua vez!')
-    print('Peças em jogo: {} | Peças permitidas retirar na rodada: {}'.format(quantidadePecas, pecasRetirar))
-    usuarioPecasRetirar = int(input('Quantas peças deseja retirar? '))
+    #print('É a sua vez!')
+    print('Agora restam {} peças no tabuleiro.'.format(quantidadePecas, pecasRetirar))
+    usuarioPecasRetirar = int(input('Quantas peças você vai retirar? '))
 
     while usuarioPecasRetirar > pecasRetirar:
 
-        print('É a sua vez!')
-        print('Peças em jogo: {} | Peças permitidas retirar na rodada: {}'.format(quantidadePecas, pecasRetirar))
-        usuarioPecasRetirar = int(input('Jogada Inválida! Digite novamente > Quantas peças deseja retirar? '))
+        #print('É a sua vez!')
+        print('Oops! Jogada inválida! Tente de novo')
+        usuarioPecasRetirar = int(input('Quantas peças você vai retirar? '))
 
     return usuarioPecasRetirar
 
 
 def partida():
 
-    quantidadePecas = int(input('Digite o numero de peças do jogo: '))
+    #quantidadePecas = int(input('Digite o numero de peças do jogo: '))
+    quantidadePecas = int(input('Quantas pecas?'))
 
-    pecasRetirar = int(input('Digite o numero maximo de peças a retirar por rodada: '))
+    #pecasRetirar = int(input('Digite o numero maximo de peças a retirar por rodada: '))
+    pecasRetirar = int(input('Limite de peças por jogada?: '))
+
 
     rodada = 1
 
@@ -63,6 +66,7 @@ def partida():
 
             else:
 
+                print('Computador Começa:')
                 quantidadePecas -= computador_escolhe_jogada(quantidadePecas, pecasRetirar)
                 proximojogador = 1
 
@@ -82,7 +86,7 @@ def partida():
 
             if proximojogador == 1:
 
-                print('O computador venceu!!')
+                print('Fim de jogo! O computador ganhou!!')
                 return 2
 
             elif proximojogador == 2:
@@ -99,11 +103,11 @@ def main():
 
     while not menu == 0:
 
-        print('--------------Menu-------------')
-        print('1 - Partida única')
-        print('2 - Campeonato')
-        print('0 - Sair')
-        opcao = int(input('Digite sua opção:'))
+        print('Bem vindo ao jogo NIM! Escolha:\n')
+        print('1 - para jogar uma partida isolada')
+        print('2 - para jogar um campeonato 2')
+        #print('0 - Sair')
+        opcao = int(input('\nDigite sua opção:'))
 
         if opcao == 1:
 
@@ -111,13 +115,16 @@ def main():
 
         elif opcao == 2:
 
-            quantidadeDePartidas = int(input('Digite a quantidade de partidas:'))
+            '''quantidadeDePartidas = int(input('Digite a quantidade de partidas:'))'''
+            quantidadeDePartidas = 3
             n = 1
 
             jogadorUm = 0
             jogadorDois = 0
 
             while n <= quantidadeDePartidas:
+                
+                print('\n**** Rodada {} ****\n'.format(n))
 
                 vencedor = partida()
 
@@ -129,12 +136,16 @@ def main():
 
                     jogadorUm += 1
 
-                print('----Placar da Rodada----')
+                '''print('----Placar da Rodada----')
                 print('Computador: {} vitórias'.format(jogadorUm))
-                print('Usuário: {} vitórias'.format(jogadorDois))
+                print('Usuário: {} vitórias'.format(jogadorDois))'''
 
                 n += 1
-
+                
+            print('**** Final do campeonato! ****')
+            print('Placar: Você {} x {} Computador')
+            
+            '''
             if jogadorUm > jogadorDois:
 
                 print('-----Computador foi Campeão!!!')
@@ -143,7 +154,7 @@ def main():
 
                 print('-----Usuário foi Campeão!!!')
 
-            else: print('-----Empate!!!')
+            else: print('-----Empate!!!')'''
 
         else:
 
