@@ -9,21 +9,22 @@ def computador_escolhe_jogada(n, m):
         return n
 
     elif n > m:
+        
+        x = 1
 
-        n = 1
+        while x < m:
+            
+            testex = n
+            testex -= x
 
-        while n < m:
-
-            testen = n - n
-
-            if testen % (m + 1) == 0:
+            if testex % (m + 1) == 0:
 
                 break
 
-            n += 1
+            x += 1
 
-        print('O computador retirou: {}'.format(n))
-        return n
+        print('O computador retirou: {}'.format(x))
+        return x
 
 
 def usuario_escolhe_jogada (n, m):
@@ -118,12 +119,12 @@ def main():
             '''quantidadeDePartidas = int(input('Digite a quantidade de partidas:'))'''
             print('\nVoce escolheu um campeonato!')
             quantidadeDePartidas = 3
-            n = 1
+            partidas = 1
 
             jogadorUm = 0
             jogadorDois = 0
 
-            while n <= quantidadeDePartidas:
+            while partidas <= quantidadeDePartidas:
                 
                 print('\n**** Rodada {} ****\n'.format(n))
 
@@ -141,7 +142,7 @@ def main():
                 print('Computador: {} vitórias'.format(jogadorUm))
                 print('Usuário: {} vitórias'.format(jogadorDois))'''
 
-                n += 1
+                partidas += 1
                 
             print('**** Final do campeonato! ****')
             print('Placar: Você {} x {} Computador'.format(jogadorDois, jogadorUm))
