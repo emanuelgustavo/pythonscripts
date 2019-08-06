@@ -76,26 +76,36 @@ def compara_assinatura(as_a, as_b):
 
 def calcula_assinatura(texto):
     '''IMPLEMENTAR. Essa funcao recebe um texto e deve devolver a assinatura do texto.'''
-    relacao_type_token = n_palavras_diferentes(lista_palavras(texto)) / total_palavras_texto(lista_palavras(texto))
-    razao_hapax = n_palavras_unicas(lista_palavras(texto)) / total_palavras_texto(lista_palavras(texto))
-    tamanho_medio_palavras = soma_tamanho_palavras(lista_palavras(texto))
-    tamanho_medio_sentencas = soma_tamanho_sentencas(separa_sentencas(texto)) / len(separa_sentencas(texto))
+    total_palavras_texto = n_total_palavras_texto(lista_palavras(texto))
+    total_palavras_diferentes = n_palavras_diferentes(lista_palavras(texto))
+    total_palavras_unicas = n_palavras_unicas(lista_palavras(texto))
+    
+    relacao_type_token = total_palavras_diferentes / total_palavras_texto    
+    razao_hapax = total_palavras_unicas / total_palavras_texto
+    
+    tamanho_medio_palavras = soma_tamanho_palavras(lista_palavras(texto)) / total_palavras_texto
+
+    lista_sentencas = separa_sentencas(texto)
+    tamanho_total_sentencas = soma_tamanho_sentencas(lista_sentencas)
+    
+    tamanho_medio_sentencas = tamanho_total_sentencas / len(lista_sentencas)
+    
     complexidade_sentenca = total_frases_texto(separa_sentencas(texto)) / len(separa_sentencas(texto))
-    tamanho_medio_frase
-    return tamanho_medio_palavras, relacao_type_token, razao_hapax, tamanho_medio_sentencas, complexidade_sentenca
+    tamanho_medio_frase = soma_tamanho_frase(separa_sentencas(texto)) / len(separa_sentencas(texto))
+    return tamanho_medio_palavras, relacao_type_token, razao_hapax, tamanho_medio_sentencas, complexidade_sentenca, tamanho_medio_frase
     
 def avalia_textos(textos, ass_cp):
     '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e deve devolver o numero (1 a n) do 
     texto com maior probabilidade de ter sido infectado por COH-PIAH.'''
     pass
 
-def total_palavras_texto(listaPalavras):
+def n_total_palavras_texto(listaPalavras):
     '''Recebe uma lista com palabras e retorna o total de palavras'''
     return len(listaPalavras)
     
 def lista_palavras(texto):
     '''Recebe um texto e retorna uma lista com as palavras do texto'''
-    listaPalavras = texto.split()
+    listaPalavras = re.split(r'[.!?,]+', texto)
     return listaPalavras
 
 def soma_tamanho_palavras(lista_palavras):
@@ -106,9 +116,10 @@ def soma_tamanho_palavras(lista_palavras):
     return total_tamanho_palavras
 
 def soma_tamanho_sentencas(lista_sentencas):
+    '''Recebe uma lista de sentencas e retorna o tamanho total das sentenças'''
     total_sentencas = 0
     for sentenca in lista_sentencas:
-        total_sentencas += 1
+        total_sentencas += len(sentenca)
     print('Total sentencas texto: {}'.format(total_sentencas))
     return total_sentencas
 
@@ -119,11 +130,20 @@ def total_frases_texto(lista_sentencas):
     print('Total frases texto: {}'.format(total_frases))
     return total_frases
 
+def soma_tamanho_frase(lista_frases):
+    tamanho_frases = 0
+    for frase in lista_frases:
+      tamanho_frases += len(frase)
+    print(tamanho_frases)
+    return tamanho_frases
+
 def teste():
-    texto = "Muito além, nos confins inexplorados da região mais brega da Borda Ocidental desta Galáxia, há um pequeno sol amarelo e esquecido. Girando em torno deste sol, a uma distancia de cerca de 148 milhões de quilômetros, há um planetinha verde-azulado absolutamente insignificante, cujas formas de vida, descendentes de primatas, são tão extraordinariamente primitivas que ainda acham que relógios digitais são uma grande ideia."
+    #texto = "Muito além, nos confins inexplorados da região mais brega da Borda Ocidental desta Galáxia, há um pequeno sol amarelo e esquecido. Girando em torno deste sol, a uma distancia de cerca de 148 milhões de quilômetros, há um planetinha verde-azulado absolutamente insignificante, cujas formas de vida, descendentes de primatas, são tão extraordinariamente primitivas que ainda acham que relógios digitais são uma grande ideia."
+    texto = "Esse texto é para testar, a assinatura do identificador de cohpiah."
     print(lista_palavras(texto))
-    print('Total de palavras no texto: {}'.format(total_palavras_texto(lista_palavras(texto))))
-    print(calcula_assinatura(texto))  
+    #print('Total de palavras no texto: {}'.format(total_palavras_texto(lista_palavras(texto))))
+    print(calcula_assinatura(texto))
+    print(separa_sentencas(texto))
 
 def main():
     '''Gerencia o detector de coh-piah'''
