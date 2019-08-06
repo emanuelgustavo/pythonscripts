@@ -76,8 +76,9 @@ def compara_assinatura(as_a, as_b):
 
 def calcula_assinatura(texto):
     '''IMPLEMENTAR. Essa funcao recebe um texto e deve devolver a assinatura do texto.'''
-    relacaoTypeToken = n_palavra_diferentes(lista_palavras()) / total_palavras_texto(lista_palavras())
-    razaoHapax = n_palavras_unicas(lista_palavras()) / total_palavras_texto(lista_palavras())
+    relacaoTypeToken = n_palavras_diferentes(lista_palavras(texto)) / total_palavras_texto(lista_palavras(texto))
+    razaoHapax = n_palavras_unicas(lista_palavras(texto)) / total_palavras_texto(lista_palavras(texto))
+    return relacaoTypeToken, razaoHapax
     
 def avalia_textos(textos, ass_cp):
     '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e deve devolver o numero (1 a n) do 
@@ -100,5 +101,6 @@ def main():
     for texto in textos:
         print(lista_palavras(texto))
         print(len(lista_palavras(texto)))
+        print(calcula_assinatura(texto))    
     
 main()
