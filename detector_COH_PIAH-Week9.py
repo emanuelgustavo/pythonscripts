@@ -106,6 +106,14 @@ def n_total_palavras_texto(listaPalavras):
 def lista_palavras(texto):
     '''Recebe um texto e retorna uma lista com as palavras do texto'''
     listaPalavras = texto.split()
+    sujeiras = '.,'
+    for palavra in listaPalavras:
+      index = listaPalavras.index(palavra)
+      novaPalavra = palavra
+      for char in sujeiras:
+        novaPalavra = novaPalavra.replace(char, '')
+      listaPalavras[index] = novaPalavra
+          
     return listaPalavras
 
 def soma_tamanho_palavras(lista_palavras):
@@ -138,8 +146,8 @@ def soma_tamanho_frase(lista_frases):
     return tamanho_frases
 
 def teste():
-    #texto = "Muito além, nos confins inexplorados da região mais brega da Borda Ocidental desta Galáxia, há um pequeno sol amarelo e esquecido. Girando em torno deste sol, a uma distancia de cerca de 148 milhões de quilômetros, há um planetinha verde-azulado absolutamente insignificante, cujas formas de vida, descendentes de primatas, são tão extraordinariamente primitivas que ainda acham que relógios digitais são uma grande ideia."
-    texto = "Esse texto é para testar, a assinatura do identificador de cohpiah."
+    texto = "Muito além, nos confins inexplorados da região mais brega da Borda Ocidental desta Galáxia, há um pequeno sol amarelo e esquecido. Girando em torno deste sol, a uma distancia de cerca de 148 milhões de quilômetros, há um planetinha verde-azulado absolutamente insignificante, cujas formas de vida, descendentes de primatas, são tão extraordinariamente primitivas que ainda acham que relógios digitais são uma grande ideia."
+    #texto = "Esse texto é para testar, a assinatura do identificador de cohpiah."
     #print(lista_palavras(texto))
     #print('Total de palavras no texto: {}'.format(total_palavras_texto(lista_palavras(texto))))
     print(calcula_assinatura(texto))
