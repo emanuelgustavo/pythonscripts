@@ -86,13 +86,20 @@ def calcula_assinatura(texto):
     tamanho_medio_palavras = soma_tamanho_palavras(lista_palavras(texto)) / total_palavras_texto
 
     lista_sentencas = separa_sentencas(texto)
-    tamanho_total_sentencas = soma_tamanho_sentencas(lista_sentencas)
-    
+    tamanho_total_sentencas = soma_tamanho_sentencas(lista_sentencas)    
     tamanho_medio_sentencas = tamanho_total_sentencas / len(lista_sentencas)
-    
-    complexidade_sentenca = total_frases_texto(separa_sentencas(texto)) / len(separa_sentencas(texto))
-    tamanho_medio_frase = soma_tamanho_frase(separa_sentencas(texto)) / len(separa_sentencas(texto))
-    return tamanho_medio_palavras
+
+    total_frases_texto = 0
+    lista_frases_texto = []
+    for sentenca in lista_sentencas:
+      total_frases = len(separa_frases(sentenca))
+      lista_frases_texto.append(separa_frases(sentenca))
+      total_frases_texto += total_frases
+    #print('total_frases_texto: {}'.format(total_frases_texto))
+    complexidade_sentenca = total_frases_texto / len(lista_sentencas)
+    tamanho_medio_frase = soma_tamanho_frase(lista_frases_texto) / total_frases_texto
+
+    return [tamanho_medio_palavras, relacao_type_token, razao_hapax, tamanho_medio_sentencas, complexidade_sentenca, tamanho_medio_frase]
     
 def avalia_textos(textos, ass_cp):
     '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e deve devolver o numero (1 a n) do 
@@ -120,7 +127,7 @@ def soma_tamanho_palavras(lista_palavras):
     total_tamanho_palavras = 0
     for palavra in lista_palavras:
         total_tamanho_palavras += len(palavra)
-    print('Total tamanho palavras: {}'.format(total_tamanho_palavras))
+    #print('Total tamanho palavras: {}'.format(total_tamanho_palavras))
     return total_tamanho_palavras
 
 def soma_tamanho_sentencas(lista_sentencas):
@@ -128,31 +135,39 @@ def soma_tamanho_sentencas(lista_sentencas):
     total_sentencas = 0
     for sentenca in lista_sentencas:
         total_sentencas += len(sentenca)
-    print('Total sentencas texto: {}'.format(total_sentencas))
+    #print('Total tamanho sentencas texto: {}'.format(total_sentencas))
     return total_sentencas
 
 def total_frases_texto(lista_sentencas):
-    total_frases = 0
-    for frase in lista_sentencas:
-        total_frases += 1
-    print('Total frases texto: {}'.format(total_frases))
-    return total_frases
+   '''recebe uma lista de frases e retorna o total de frases nas sentencas'''
+   total_frases = 0
+   for frase in lista_sentencas:
+       total_frases += 1
+       #print('Frase {} : {}'.format(lista_sentencas.index(frase), frase))
+   #print('Total frases texto: {}'.format(total_frases))
+   return total_frases
 
 def soma_tamanho_frase(lista_frases):
     tamanho_frases = 0
+    sujeiras = '.,'
     for frase in lista_frases:
-      tamanho_frases += len(frase)
-    print(tamanho_frases)
+      for palavra in frase:
+        for char in palavra:
+          if char not in sujeiras:
+            tamanho_frases += 1      
+    #print(tamanho_frases)
     return tamanho_frases
 
 def teste():
     texto = "Muito além, nos confins inexplorados da região mais brega da Borda Ocidental desta Galáxia, há um pequeno sol amarelo e esquecido. Girando em torno deste sol, a uma distancia de cerca de 148 milhões de quilômetros, há um planetinha verde-azulado absolutamente insignificante, cujas formas de vida, descendentes de primatas, são tão extraordinariamente primitivas que ainda acham que relógios digitais são uma grande ideia."
-    #texto = "Esse texto é para testar, a assinatura do identificador de cohpiah."
-    #print(lista_palavras(texto))
-    #print('Total de palavras no texto: {}'.format(total_palavras_texto(lista_palavras(texto))))
-    print(calcula_assinatura(texto))
-    print(lista_palavras(texto))
-    #print(separa_sentencas(texto))
+    esperado = [5.571428571428571, 0.8253968253968254, 0.6984126984126984, 210.0, 4.5, 45.888888888888886]
+    retorno = (calcula_assinatura(texto))
+    if esperado == retorno:
+      print('Chave OK!')
+    else:
+      print('Erro!')
+    print('Retorno: {}'.format(retorno))
+    print('Esperado: {}'.format(esperado))
 
 def main():
     '''Gerencia o detector de coh-piah'''
