@@ -1,5 +1,6 @@
 #!-*- conding: utf8 -*-
 import re
+import operator
 
 def le_assinatura():
   '''A funcao le os valores dos tracos linguisticos do modelo e devolve uma 
@@ -72,7 +73,14 @@ def n_palavras_diferentes(lista_palavras):
 def compara_assinatura(as_a, as_b):
     '''IMPLEMENTAR. Essa funcao recebe duas assinaturas de texto e deve devolver o grau de 
     similaridade nas assinaturas.'''
-    pass
+    somatorio_ass = 0
+    index = 0
+    if len(as_a) == len(as_b):
+        while index < len(as_b):
+            somatorio_ass += as_a[index] - as_b[index]
+            index += 1
+    indice_de_similaridade = abs(somatorio_ass) / 6
+    return indice_de_similaridade
 
 def calcula_assinatura(texto):
     '''IMPLEMENTAR. Essa funcao recebe um texto e deve devolver a assinatura do texto.'''
@@ -82,7 +90,10 @@ def calcula_assinatura(texto):
     
     relacao_type_token = total_palavras_diferentes / total_palavras_texto    
     razao_hapax = total_palavras_unicas / total_palavras_texto
-    
+
+    print(lista_palavras(texto))
+    print(soma_tamanho_palavras(lista_palavras(texto)))
+    print(total_palavras_texto)
     tamanho_medio_palavras = soma_tamanho_palavras(lista_palavras(texto)) / total_palavras_texto
 
     lista_sentencas = separa_sentencas(texto)
@@ -98,13 +109,29 @@ def calcula_assinatura(texto):
     #print('total_frases_texto: {}'.format(total_frases_texto))
     complexidade_sentenca = total_frases_texto / len(lista_sentencas)
     tamanho_medio_frase = soma_tamanho_frase(lista_frases_texto) / total_frases_texto
-
+    
     return [tamanho_medio_palavras, relacao_type_token, razao_hapax, tamanho_medio_sentencas, complexidade_sentenca, tamanho_medio_frase]
     
 def avalia_textos(textos, ass_cp):
     '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e deve devolver o numero (1 a n) do 
     texto com maior probabilidade de ter sido infectado por COH-PIAH.'''
-    pass
+    as_bs = []
+    indice_lista = 0
+    
+    for texto in textos:
+        as_bs.append(calcula_assinatura(texto))
+        
+    indices_similaridade = []
+    
+    for ass in as_bs:
+        indices_similaridade.append(compara_assinatura(ass_cp, ass))
+        
+    texto_infectado = 0
+    while indice_lista < len(indices_similaridade)-1:
+        if indices_similaridade[indice_lista + 1] < indices_similaridade[texto_infectado]:
+            texto_infectado = indice_lista+1
+        indice_lista += 1
+    return texto_infectado+1
 
 def n_total_palavras_texto(listaPalavras):
     '''Recebe uma lista com palabras e retorna o total de palavras'''
@@ -112,7 +139,7 @@ def n_total_palavras_texto(listaPalavras):
     
 def lista_palavras(texto):
     '''Recebe um texto e retorna uma lista com as palavras do texto'''
-    listaPalavras = texto.split()
+    listaPalavras = re.split(r'[ ,.:"\[\]\;\(\)]+',texto)
     sujeiras = '.,'
     for palavra in listaPalavras:
       index = listaPalavras.index(palavra)
@@ -171,14 +198,40 @@ def teste():
 
 def main():
     '''Gerencia o detector de coh-piah'''
-    '''
-    textos = le_textos()
-    print(textos)
-    for texto in textos:
-        print(lista_palavras(texto))
-        print(len(lista_palavras(texto)))
-        print(calcula_assinatura(texto))
-    '''
-    teste()
+    #as_a = le_assinatura()
+    #textos = le_textos()
+    #print('O autor do texto {} está infectado com COH-PIAH'.format(avalia_textos(textos, as_a)))
+
+    '''linhas para teste'''
+    #as_a = ass_teste()
+    #textos = lista_textos_ex()
+    #teste()
+    #testa_assinatura()
+    #texto = 'NOSSA alegria diante dum sistema metafisico, nossa satisfação em presença duma construção do pensamento, em que a organização espiritual do mundo se mostra num conjunto lógico, coerente a harmônico, sempre dependem eminentemente da estética; têm a mesma origem que o prazer, que a alta satisfação, sempre serena afinal, que a atividade artística nos proporciona quando cria a ordem e a forma a nos permite abranger com a vista o caos da vida, dando-lhe transparência.'
+    texto = 'Navegadores antigos tinham uma frase gloriosa:"Navegar é preciso; viver não é preciso".Quero para mim o espírito [d]esta frase,transformada a forma para a casar como eu sou:Viver não é necessário; o que é necessário é criar.Não conto gozar a minha vida; nem em gozá-la penso.Só quero torná-la grande,ainda que para isso tenha de ser o meu corpo e a (minha alma) a lenha desse fogo.Só quero torná-la de toda a humanidade;ainda que para isso tenha de a perder como minha.Cada vez mais assim penso.Cada vez mais ponho da essência anímica do meu sangueo propósito impessoal de engrandecer a pátria e contribuirpara a evolução da humanidade.É a forma que em mim tomou o misticismo da nossa Raça.'
+    print(calcula_assinatura(texto))
+        
+
+def lista_textos_ex():
+    textos = [
+        'NOSSA alegria diante dum sistema metafisico, nossa satisfação em presença duma construção do pensamento, em que a organização espiritual do mundo se mostra num conjunto lógico, coerente a harmônico, sempre dependem eminentemente da estética; têm a mesma origem que o prazer, que a alta satisfação, sempre serena afinal, que a atividade artística nos proporciona quando cria a ordem e a forma a nos permite abranger com a vista o caos da vida, dando-lhe transparência.',
+        'Voltei-me para ela; Capitu tinha os olhos no chão. Ergueu-os logo, devagar, e ficamos a olhar um para o outro... Confissão de crianças, tu valias bem duas ou três páginas, mas quero ser poupado. Em verdade, não falamos nada; o muro falou por nós. Não nos movemos, as mãos é que se estenderam pouco a pouco, todas quatro, pegando-se, apertando-se, fundindo-se. Não marquei a hora exata daquele gesto. Devia tê-la marcado; sinto a falta de uma nota escrita naquela mesma noite, e que eu poria aqui com os erros de ortografia que trouxesse, mas não traria nenhum, tal era a diferença entre o estudante e o adolescente. Conhecia as regras do escrever, sem suspeitar as do amar; tinha orgias de latim e era virgem de mulheres.',
+        'NOSSA alegria diante dum sistema metafisico, nossa satisfação em presença duma construção do pensamento, em que a organização espiritual do mundo se mostra num conjunto lógico, coerente a harmônico, sempre dependem eminentemente da estética; têm a mesma origem que o prazer, que a alta satisfação, sempre serena afinal, que a atividade artística nos proporciona quando cria a ordem e a forma a nos permite abranger com a vista o caos da vida, dando-lhe transparência.'
+        ]
+    return textos
+
+def testa_assinatura():
+    ass_a = [4.34, 0.05, 0.02, 12.81, 2.16, 0.0]
+    ass_b = [3.96, 0.05, 0.02, 22.22, 3.41, 0.0]
+    print(compara_assinatura(ass_a, ass_b))
+
+def ass_teste():
+    wal = 4.79
+    ttr = 0.72
+    hlr = 0.56
+    sal = 80.5
+    sac = 2.5
+    pal = 31.6
+    return [wal, ttr, hlr, sal, sac, pal]
     
 main()
