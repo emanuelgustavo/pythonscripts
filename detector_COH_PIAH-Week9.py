@@ -84,7 +84,7 @@ def compara_assinatura(as_a, as_b):
 
 def calcula_assinatura(texto):
     '''IMPLEMENTAR. Essa funcao recebe um texto e deve devolver a assinatura do texto.'''
-    total_palavras_texto = n_total_palavras_texto(lista_palavras(texto))
+    '''total_palavras_texto = n_total_palavras_texto(lista_palavras(texto))
     total_palavras_diferentes = n_palavras_diferentes(lista_palavras(texto))
     total_palavras_unicas = n_palavras_unicas(lista_palavras(texto))
     
@@ -111,6 +111,42 @@ def calcula_assinatura(texto):
     tamanho_medio_frase = soma_tamanho_frase(lista_frases_texto) / total_frases_texto
     
     return [tamanho_medio_palavras, relacao_type_token, razao_hapax, tamanho_medio_sentencas, complexidade_sentenca, tamanho_medio_frase]
+    '''
+    lista_sentencas_texto = separa_sentencas(texto)
+    lista_palavras_texto = []
+    lista_frases_texto = []
+    
+    total_palavras_texto = 0
+    total_frases_texto = 0
+    total_tamanho_sentencas = 0
+    total_sentencas_texto = 0
+    
+    for sentenca in lista_sentencas_texto:
+        lista_frases_texto.append(separa_frases(sentenca))
+        total_tamanho_sentencas += len(sentenca)
+        total_sentencas_texto += 1
+        
+    for frase_i in lista_frases_texto:
+        for frase_j in frase_i:
+            lista_palavras_frase = []            
+            lista_palavras_frase.append(separa_palavras(frase_j))
+            for frase in lista_palavras_frase:
+                total_frases_texto += 1
+                for palavra in frase:
+                    lista_palavras_texto.append(palavra)
+    
+    total_palavras_texto = len(lista_palavras_texto)
+    total_palavras_diferentes = n_palavras_diferentes(lista_palavras_texto)
+    total_palavras_unicas = n_palavras_unicas(lista_palavras_texto)
+    
+    relacao_type_token = total_palavras_diferentes / total_palavras_texto    
+    razao_hapax = total_palavras_unicas / total_palavras_texto
+    complexidade_sentenca = total_frases_texto / len(lista_sentencas_texto)
+    tamanho_medio_frase = soma_tamanho_frase(lista_frases_texto) / total_frases_texto
+    tamanho_medio_palavras = soma_tamanho_palavras(lista_palavras_texto) / total_palavras_texto
+    tamanho_medio_sentencas = total_tamanho_sentencas / total_sentencas_texto
+
+    return [tamanho_medio_palavras, relacao_type_token, razao_hapax, tamanho_medio_sentencas, complexidade_sentenca, tamanho_medio_frase]
     
 def avalia_textos(textos, ass_cp):
     '''IMPLEMENTAR. Essa funcao recebe uma lista de textos e deve devolver o numero (1 a n) do 
@@ -134,7 +170,7 @@ def avalia_textos(textos, ass_cp):
     return texto_infectado+1
 
 def n_total_palavras_texto(listaPalavras):
-    '''Recebe uma lista com palabras e retorna o total de palavras'''
+    '''Recebe uma lista com palavras e retorna o total de palavras'''
     return len(listaPalavras)
     
 def lista_palavras(texto):
@@ -198,18 +234,20 @@ def teste():
 
 def main():
     '''Gerencia o detector de coh-piah'''
-    #as_a = le_assinatura()
-    #textos = le_textos()
-    #print('O autor do texto {} está infectado com COH-PIAH'.format(avalia_textos(textos, as_a)))
+    as_a = le_assinatura()
+    textos = le_textos()
+    print('O autor do texto {} está infectado com COH-PIAH'.format(avalia_textos(textos, as_a)))
 
     '''linhas para teste'''
     #as_a = ass_teste()
     #textos = lista_textos_ex()
+    #print('O autor do texto {} está infectado com COH-PIAH'.format(avalia_textos(textos, as_a)))
     #teste()
     #testa_assinatura()
     #texto = 'NOSSA alegria diante dum sistema metafisico, nossa satisfação em presença duma construção do pensamento, em que a organização espiritual do mundo se mostra num conjunto lógico, coerente a harmônico, sempre dependem eminentemente da estética; têm a mesma origem que o prazer, que a alta satisfação, sempre serena afinal, que a atividade artística nos proporciona quando cria a ordem e a forma a nos permite abranger com a vista o caos da vida, dando-lhe transparência.'
-    texto = 'Navegadores antigos tinham uma frase gloriosa:"Navegar é preciso; viver não é preciso".Quero para mim o espírito [d]esta frase,transformada a forma para a casar como eu sou:Viver não é necessário; o que é necessário é criar.Não conto gozar a minha vida; nem em gozá-la penso.Só quero torná-la grande,ainda que para isso tenha de ser o meu corpo e a (minha alma) a lenha desse fogo.Só quero torná-la de toda a humanidade;ainda que para isso tenha de a perder como minha.Cada vez mais assim penso.Cada vez mais ponho da essência anímica do meu sangueo propósito impessoal de engrandecer a pátria e contribuirpara a evolução da humanidade.É a forma que em mim tomou o misticismo da nossa Raça.'
-    print(calcula_assinatura(texto))
+    #texto = 'Navegadores antigos tinham uma frase gloriosa:"Navegar é preciso; viver não é preciso".Quero para mim o espírito [d]esta frase,transformada a forma para a casar como eu sou:Viver não é necessário; o que é necessário é criar.Não conto gozar a minha vida; nem em gozá-la penso.Só quero torná-la grande,ainda que para isso tenha de ser o meu corpo e a (minha alma) a lenha desse fogo.Só quero torná-la de toda a humanidade;ainda que para isso tenha de a perder como minha.Cada vez mais assim penso.Cada vez mais ponho da essência anímica do meu sangueo propósito impessoal de engrandecer a pátria e contribuirpara a evolução da humanidade.É a forma que em mim tomou o misticismo da nossa Raça.'
+    #texto = 'Muito além, nos confins inexplorados da região mais brega da Borda Ocidental desta Galáxia, há um pequeno sol amarelo e esquecido. Girando em torno deste sol, a uma distancia de cerca de 148 milhões de quilômetros, há um planetinha verde-azulado absolutamente insignificante, cujas formas de vida, descendentes de primatas, são tão extraordinariamente primitivas que ainda acham que relógios digitais são uma grande ideia.'
+    #print(calcula_assinatura(texto))
         
 
 def lista_textos_ex():
