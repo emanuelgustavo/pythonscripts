@@ -1,10 +1,20 @@
 def dimensoes(matriz):
     total_linhas = len(matriz)
     total_colunas = len(matriz[0])
-    '''
-    for linha in matriz:
-        for coluna in linha:
-            total_colunas += 1
-        total_linhas += 1
-    '''
-    return '{}x{}'.format(total_linhas, total_colunas)
+    print('{}X{}'.format(total_linhas, total_colunas))
+
+dimensoes([[1, 2], [3, 4]])
+
+dimensoes([[1, 1], [1, 1]])
+
+dimensoes([[1, 2, 7, 1], [3, 4, 8, 1], [1, 2, 3, 1], [2, 3, 6, 7]])
+
+dimensoes([[1, 2, 7, 1], [3, 4, 8, 1], [1, 2, 3, 1]])
+
+dimensoes([[1, 1, 1], [1, 1, 1], [1, 1, 1], [1, 1, 1]])
+
+dimensoes([[1], [2]])
+
+dimensoes([[1, 2]])
+
+dimensoes([[1]])
