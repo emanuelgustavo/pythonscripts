@@ -3,23 +3,50 @@ import random
 def main():    
     #print(verificaResultado(aposta(), sorteio()))
     #simulaSorteios()
-    print(sorteiosReal())
-    
-        
+    #sorteiosReal()
+    frequencia_dezenas('sorteios_dezenas.txt')
 
 def sorteiosReal():
     with open('megasena.txt', 'r') as arquivo:
         sorteios = arquivo.readlines()
     matriz_sorteios = []
+    matriz_sorteios_dezenas = ''
     for line in sorteios:
         linha_matriz = []
+        linha_matriz_sorteios_dezenas = ''
         linha_dados = line.split(';')
         for data in linha_dados:
+            if linha_dados.index(data) not in [ 0,1, len(linha_dados)-1 ]:
+                linha_matriz_sorteios_dezenas += data + ';' 
             linha_matriz.append(data)
+        matriz_sorteios_dezenas += linha_matriz_sorteios_dezenas + '\n'
         matriz_sorteios.append(linha_matriz)
         #sorteio, data,  dezena1, dezena2, dezena3, dezena4, dezena5, dezena6 = line.split(';')
         #print('{} {} {} {} {} {} {} {} \n'.format(sorteio, data,  dezena1, dezena2, dezena3, dezena4, dezena5, dezena6))
+    arq = open('sorteios_dezenas.txt', 'w')
+    arq.write(matriz_sorteios_dezenas)
+    arq.close()
+    
     return matriz_sorteios
+
+def frequencia_dezenas(arquivo):
+    '''recebe um arquivo com os sorteios e retornar um dicionario com a frequencia de cada dezena'''
+    arq = open(arquivo, 'r')
+    sorteios = arq.readlines()
+    #print(sorteios)
+    frequencia = {}
+    for line in sorteios:
+        sorteio = line.split(';')
+        sorteio.remove('\n')
+        for data in sorteio:
+            dezena = int(data)
+            if dezena > 0 and dezena <= 60:
+                if data not in frequencia:
+                    frequencia[data] = 1
+                else:
+                    frequencia[data] += 1
+                
+    print(frequencia)
 
 def aposta():
     aposta = []
