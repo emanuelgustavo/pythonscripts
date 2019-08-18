@@ -17,6 +17,8 @@ def marque_atacadas(tab):
                 elif divisao_horizontal[j]=='-':
                     if i == posicao_peca_linha_tabuleiro and j == posicao_peca_coluna_tabuleiro:
                         linha_tabuleiro.append(tab[peca_linha][peca_coluna])
+                    elif j == posicao_peca_coluna_tabuleiro:
+                        linha_tabuleiro.append('X')
                     else:
                         linha_tabuleiro.append(' ')
         else:
@@ -29,6 +31,9 @@ def marque_atacadas(tab):
         for j in range(len(matriz_tabuleiro[0])):
             print(matriz_tabuleiro[i][j], end='')
         print()
+        
+def trilha_peca(posicao_Linha, posicao_coluna, i, j):
+    pass
         
 def acha_posicao_peca(tab):
     tabuleiro = tab
