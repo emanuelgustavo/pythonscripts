@@ -8,16 +8,18 @@ def marque_atacadas(tab):
     peca_linha = posicao_peca[2]
     peca_coluna = posicao_peca[3]
     
+    trilha = trilha_peca(peca_linha, peca_coluna)
+    
     for i in range(17):
         linha_tabuleiro = []
         if i % 2 != 0:
             for j in range(33):
                 if divisao_horizontal[j] == '+':
                     linha_tabuleiro.append('|')
-                elif divisao_horizontal[j]=='-':
+                elif divisao_horizontal[j]=='-': 
                     if i == posicao_peca_linha_tabuleiro and j == posicao_peca_coluna_tabuleiro:
                         linha_tabuleiro.append(tab[peca_linha][peca_coluna])
-                    elif j == posicao_peca_coluna_tabuleiro:
+                    elif [i, j] in trilha:
                         linha_tabuleiro.append('X')
                     else:
                         linha_tabuleiro.append(' ')
@@ -32,8 +34,34 @@ def marque_atacadas(tab):
             print(matriz_tabuleiro[i][j], end='')
         print()
         
-def trilha_peca(posicao_Linha, posicao_coluna, i, j):
-    pass
+def trilha_peca(posicao_peca_Linha, posicao_peca_coluna):
+    
+    lista_trilha = []
+    
+    for i in range(8):
+        for j in range(8):
+            if i == j:
+                if i != posicao_peca_Linha and j != posicao_peca_coluna:
+                    lista_trilha.append([i, j])
+                    if 6-j >= 0:
+                        if i != 6-j:
+                            lista_trilha.append([i, 6-j])
+                    
+    for j in range(8):
+        if j != posicao_peca_Linha:
+            lista_trilha.append([posicao_peca_Linha, j])
+    for i in range(8):
+        if i != posicao_peca_coluna:
+            lista_trilha.append([i, posicao_peca_coluna])
+            
+    for posicao in lista_trilha:
+        indice_posicao = lista_trilha.index(posicao)
+        nova_posicao = traduz_posicao(posicao[0], posicao[1])
+        lista_trilha[indice_posicao] = nova_posicao                    
+                    
+    return lista_trilha               
+                    
+                            
         
 def acha_posicao_peca(tab):
     tabuleiro = tab
@@ -48,7 +76,14 @@ def acha_posicao_peca(tab):
             if tabuleiro[i][j] != ' ':
                 posicao_peca_coluna = j
                 posicao_peca_linha = i
-        print()
+                
+    posicao = traduz_posicao(posicao_peca_linha, posicao_peca_coluna)
+    posicao_linha = posicao[0]
+    posicao_coluna = posicao[1]
+                
+    return [posicao_linha, posicao_coluna, posicao_peca_linha, posicao_peca_coluna]
+    
+def traduz_posicao(posicao_peca_linha, posicao_peca_coluna):
     
     posicao_coluna = {
         0:2,
@@ -70,10 +105,9 @@ def acha_posicao_peca(tab):
         6:13,
         7:15 
     }
-                
-    return [posicao_Linha[posicao_peca_linha], posicao_coluna[posicao_peca_coluna], posicao_peca_linha, posicao_peca_coluna]
-    
-    
+
+    return [posicao_Linha[posicao_peca_linha], posicao_coluna[posicao_peca_coluna]]
+     
     
         
 tabuleiro = [ list('        '),
@@ -88,5 +122,8 @@ tabuleiro = [ list('        '),
 
 
 marque_atacadas(tabuleiro)
+
+#print(trilha_peca(3,3))
+#print(len(trilha_peca(3,3)))
 
               
