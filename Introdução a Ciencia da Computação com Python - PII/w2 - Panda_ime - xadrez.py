@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 def marque_atacadas(tab):
     divisao_horizontal = '+---+---+---+---+---+---+---+---+'
     matriz_tabuleiro = []
@@ -21,7 +20,7 @@ def marque_atacadas(tab):
                     if i == posicao_peca_linha_tabuleiro and j == posicao_peca_coluna_tabuleiro:
                         linha_tabuleiro.append(tab[peca_linha][peca_coluna])
                     elif [i, j] in trilha:
-                        linha_tabuleiro.append('X')
+                        linha_tabuleiro.append('x')
                     else:
                         linha_tabuleiro.append(' ')
         else:
@@ -38,22 +37,23 @@ def marque_atacadas(tab):
 def trilha_peca(posicao_peca_Linha, posicao_peca_coluna):
     
     lista_trilha = []
-    
-    for i in range(8):
-        for j in range(8):
-            if i == j:
-                if i != posicao_peca_Linha and j != posicao_peca_coluna:
-                    lista_trilha.append([i, j])
-                    if 6-j >= 0:
-                        if i != 6-j:
-                            lista_trilha.append([i, 6-j])
-                    
+
     for j in range(8):
         if j != posicao_peca_Linha:
             lista_trilha.append([posicao_peca_Linha, j])
     for i in range(8):
         if i != posicao_peca_coluna:
             lista_trilha.append([i, posicao_peca_coluna])
+    
+    for i in range(8):
+        for j in range(8):
+            if i == j:
+                if i != posicao_peca_Linha and j != posicao_peca_coluna:
+                    lista_trilha.append([i, j])
+                    if 6-j >= 0 and posicao_peca_coluna != 0:
+                        if i != 6-j:
+                            lista_trilha.append([i, 6-j])                    
+   
             
     for posicao in lista_trilha:
         indice_posicao = lista_trilha.index(posicao)
@@ -111,13 +111,13 @@ def traduz_posicao(posicao_peca_linha, posicao_peca_coluna):
      
     
         
-tabuleiro = [ list('        '),
-              list('        '),
+tabuleiro = [ list('       '),
+              list('         '),
               list('        '),
               list('   R    '),
               list('        '),
               list('        '),
-              list('        '),
+              list('       '),
               list('        ') 
             ]
 
