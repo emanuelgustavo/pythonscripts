@@ -11,7 +11,7 @@ def multiplica_matriz(A, B):
         for i in range(num_lin):
             for j in range(num_col):                
                 resultado = 0
-                for z in range(num_col):
+                for z in range(len(A[0])):
                     resultado += A[i][z] * B[z][j]
                 C[i][j] = resultado
         return C
