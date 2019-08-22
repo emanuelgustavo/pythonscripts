@@ -45,7 +45,18 @@ def frequencia_dezenas(arquivo):
                     frequencia[data] = 1
                 else:
                     frequencia[data] += 1
-                
+    ordem_dezenas = []
+    for i in range(1, 61):
+        ordem_dezenas.append(i)
+
+    print(ordem_dezenas)
+        
+    freq = open('frequencia_dezenas.txt', 'w')
+    for i in ordem_dezenas:
+        data_dezena = 'Dezena {} repetiu {} vezes.\n'.format(i, frequencia[str(i)])
+        freq.write(data_dezena)
+    freq.close()
+    
     print(frequencia)
 
 def aposta():
