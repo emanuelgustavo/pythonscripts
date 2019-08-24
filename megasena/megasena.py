@@ -3,8 +3,8 @@ import random
 def main():    
     #print(verificaResultado(aposta(), sorteio()))
     #simulaSorteios()
-    #sorteiosReal()
-    frequencia_dezenas('sorteios_dezenas.txt')
+    sorteiosReal()
+    #frequencia_dezenas('sorteios_dezenas.txt')
 
 def sorteiosReal():
     with open('megasena.txt', 'r') as arquivo:
@@ -16,9 +16,9 @@ def sorteiosReal():
         linha_matriz_sorteios_dezenas = ''
         linha_dados = line.split(';')
         for data in linha_dados:
-            if linha_dados.index(data) not in [ 0,1, len(linha_dados)-1 ]:
+            if linha_dados.index(data) not in [ 0,1, len(linha_dados) ]:
                 linha_matriz_sorteios_dezenas += data + ';' 
-            linha_matriz.append(data)
+            #linha_matriz.append(data)
         matriz_sorteios_dezenas += linha_matriz_sorteios_dezenas + '\n'
         matriz_sorteios.append(linha_matriz)
         #sorteio, data,  dezena1, dezena2, dezena3, dezena4, dezena5, dezena6 = line.split(';')
