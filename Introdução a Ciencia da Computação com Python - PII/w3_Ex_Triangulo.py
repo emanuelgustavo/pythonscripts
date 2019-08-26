@@ -5,6 +5,7 @@ lados a, b e c de um triângulo.
 A classe triângulo também deve possuir um método perimetro, que não recebe parâmetros 
 e devolve um valor inteiro correspondente ao perímetro do triângulo.
 '''
+import math
 
 class Triangulo:
     
@@ -12,16 +13,7 @@ class Triangulo:
         self.a = a
         self.b = b
         self.c = c
-    '''   
-    def a(self):
-        return self.lado_a
     
-    def b(self):
-        return self.lado_b
-    
-    def c(self):
-        return self.lado_c
-    '''
     def perimetro(self):
         return self.a + self.b + self.c
     
@@ -32,3 +24,21 @@ class Triangulo:
             return 'escaleno'
         else:
             return 'isóceles'
+
+    def retangulo(self):
+        return True if math.sqrt(( self.a**2 + self.b**2 )) == self.c else False
+
+    def semelhantes(self, triangulo):
+        if self.a == triangulo.a and self.b == triangulo.b and self.c == triangulo.c:
+            return True
+        elif self.a % triangulo.a == 0 and self.b % triangulo.b == 0 and self.c % triangulo.c == 0:
+            return True
+        elif triangulo.a % self.a == 0 and triangulo.b % self.b == 0 and triangulo.c % self.c == 0:
+            return True
+        else:
+            return False   
+        
+            
+            
+
+    
