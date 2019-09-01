@@ -3,14 +3,18 @@ Complexidade Computacional
 Lista com 2 milhões de telefones aleatórios
 '''
 import random
+import w4_ordenacao_direta as ordenador
 
 def main():
     
     #gera_lista_telefonica()
-    nome_busca = input('Digite o nome a buscar na lista: ')
-    lista_telefonica = carrega_contatos()
-    print(busca_contato(nome_busca, lista_telefonica))
-
+    #nome_busca = input('Digite o nome a buscar na lista: ')
+    #lista_telefonica = carrega_contatos()
+    #print(busca_contato(nome_busca, lista_telefonica))
+    
+    lista = [7,6,2,1,9,3]
+    ordena = ordenador.Ordenador()
+    print(ordena.ordenacao_direta(lista))
 
 def carrega_contatos():
     
@@ -92,6 +96,3 @@ def gera_lista_telefonica():
     arq_lista_telefone.close()
     
 main()
-                          
-
-
