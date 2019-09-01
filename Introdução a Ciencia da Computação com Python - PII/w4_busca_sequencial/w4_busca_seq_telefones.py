@@ -18,6 +18,17 @@ def busca_contato(nome):
             return [ contato, lista_contatos[contato] ]
         else:
             return print('nenhum contato com esse nome')
+        
+def gera_nome(lista_nomes):
+    
+    nome = ''
+    
+    for i in range(3):
+        nome += lista_nomes[random.randint(0, len(lista_nomes)-1)]
+        if i < 3:
+            nome += ' '
+    
+    return nome
 
 def gera_telefone():
     
@@ -39,15 +50,25 @@ nomes = arq_nomes.readlines()
 for index in range(len(nomes)):
     nomes[index] = nomes[index].rstrip('\n')
 
-for i in range(100):
-    nome = nomes[random.randint(0, len(nomes)-1)]
+i_quantidade_contatos = 1
+
+while i_quantidade_contatos <= 200000:
+    
+    nome = ''
+    nome = gera_nome(nomes)
     telefone = gera_telefone()
     lista_telefonica[nome] = telefone
-    print('{} nome(s) gerados.'.format(i))
+    print('{} nome(s) gerados.'.format(i_quantidade_contatos))
+    i_quantidade_contatos += 1
+
+print(len(lista_telefonica))
 
 arq_lista_telefone = open('lista_telefones.txt', 'w')
 
+cont = 1
 for contato in lista_telefonica:
+    #print(cont, contato, sep=' ')
+    cont += 1
     str_contato = ''
     str_contato += contato + ' ' + lista_telefonica[contato] + '\n'
     arq_lista_telefone.write(str_contato)
