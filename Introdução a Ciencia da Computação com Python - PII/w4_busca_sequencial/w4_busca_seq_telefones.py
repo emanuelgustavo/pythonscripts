@@ -4,33 +4,44 @@ Lista com 2 milhões de telefones aleatórios
 '''
 import random
 
-def busca_contato(nome):
-    arq_lista = open('lista_telefones.txt', 'r')
-    lista_telefones = arq_lista.readlines()
-    lista_contatos = {}
-    for linha in lista_telefones:
-        contato = []
-        contato = linha.split()
-        lista_contatos[contato[0]] = contato[1]
+def main():
+    
+    #gera_lista_telefonica()
+    nome_busca = input('Digite o nome a buscar na lista: ')
+    lista_telefonica = carrega_contatos()
+    print(busca_contato(nome_busca, lista_telefonica))
 
+
+def carrega_contatos():
+    
+    matriz_lista_telefonica = []
+    
+    with open('lista_telefones.txt', 'r') as arq_lista_telefone:
+        lista_contatos = arq_lista_telefone.readlines()
+        
+        for linha in lista_contatos:
+            linha_matriz = []
+            numero, nome, telefone = linha.split(';')
+            linha_matriz.append(numero)
+            linha_matriz.append(nome)
+            linha_matriz.append(telefone)
+            matriz_lista_telefonica.append(linha_matriz)
+    
+    return matriz_lista_telefonica
+            
+def busca_contato(nome, lista_contatos):
+    
     for contato in lista_contatos:
-        if contato == nome:
-            return [ contato, lista_contatos[contato] ]
-        else:
-            return print('nenhum contato com esse nome')
+        if nome.lower() == contato[1].lower():
+            return contato
+        print('Nenhum contato com esse nome')
         
 def gera_nome(lista_nomes):
+    '''função gera e retorna um nome aleatoriamente como string'''
+    return lista_nomes[random.randint(0, len(lista_nomes)-1)]
     
-    nome = ''
-    
-    for i in range(3):
-        nome += lista_nomes[random.randint(0, len(lista_nomes)-1)]
-        if i < 3:
-            nome += ' '
-    
-    return nome
-
 def gera_telefone():
+    '''função gera e retorna um numero de 8 digitos aleatoriamente como string'''
     
     numero_telefone= ''
 
@@ -42,38 +53,45 @@ def gera_telefone():
 
     return numero_telefone
 
-lista_telefonica = {}
+def gera_lista_telefonica():
 
-arq_nomes = open('nomes.txt', 'r')
-nomes = arq_nomes.readlines()
+    lista_telefonica = []
 
-for index in range(len(nomes)):
-    nomes[index] = nomes[index].rstrip('\n')
+    arq_nomes = open('nomes.txt', 'r')
+    nomes = arq_nomes.readlines()
 
-i_quantidade_contatos = 1
+    for index in range(len(nomes)):
+        nomes[index] = nomes[index].rstrip('\n')
 
-while i_quantidade_contatos <= 200000:
+    i_quantidade_contatos = 0
+
+    while i_quantidade_contatos <= len(nomes)-1:
+        
+        contato = []
+        nome = nomes[i_quantidade_contatos]
+        #nome = gera_nome(nomes)
+        telefone = gera_telefone()
+        contato.append(nome)
+        contato.append(telefone)
+        lista_telefonica.append(contato)
+        print('{} nome(s) gerados. {}'.format(i_quantidade_contatos, contato))
+        i_quantidade_contatos += 1
+
+    print(len(lista_telefonica))
+
+    arq_lista_telefone = open('lista_telefones.txt', 'w')
+
+    cont = 1
+    for contato in lista_telefonica:
+        #print(cont, contato, sep=' ')
+        cont += 1
+        str_contato = ''
+        str_contato += str(cont) +';' + contato[0] + ';' + contato[1] + '\n'
+        arq_lista_telefone.write(str_contato)
+
+    arq_lista_telefone.close()
     
-    nome = ''
-    nome = gera_nome(nomes)
-    telefone = gera_telefone()
-    lista_telefonica[nome] = telefone
-    print('{} nome(s) gerados.'.format(i_quantidade_contatos))
-    i_quantidade_contatos += 1
-
-print(len(lista_telefonica))
-
-arq_lista_telefone = open('lista_telefones.txt', 'w')
-
-cont = 1
-for contato in lista_telefonica:
-    #print(cont, contato, sep=' ')
-    cont += 1
-    str_contato = ''
-    str_contato += contato + ' ' + lista_telefonica[contato] + '\n'
-    arq_lista_telefone.write(str_contato)
-
-arq_lista_telefone.close()
+main()
                           
 
 
