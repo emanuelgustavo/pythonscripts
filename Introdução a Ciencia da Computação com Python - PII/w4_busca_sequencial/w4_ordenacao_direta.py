@@ -1,3 +1,5 @@
+import random
+
 class Ordenador:
     
     def ordenacao_direta(self, lista):
@@ -17,3 +19,23 @@ class Ordenador:
             lista[i], lista[posicao_do_minimo] = lista[posicao_do_minimo], lista[i]
         
         return lista
+
+    def bolha (self, lista):
+        fim = len(lista)
+
+        print(lista)
+        for i in range(fim-1, 0, -1):
+            for j in range(i):
+                if lista[j] > lista[j+1]:
+                    lista[j], lista[j+1] = lista[j+1], lista[j]
+            print(lista)
+
+def main():
+
+    ordena = Ordenador()
+    lista = [random.randint(0,100) for x in range(10000)]
+    ordena.bolha(lista)
+
+main()
+
+        
