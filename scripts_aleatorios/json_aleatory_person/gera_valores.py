@@ -1,13 +1,18 @@
 '''classe para gerar valores aleatorios de idade, nome, sobrenome, sexo
 '''
 import random
+import re
 
 class GeraValores:
-    def carrega_arquivo(self, arquivo):
-        with open(arquivo, 'r') as arq_lista_nomes:
-            lista_arquivo = arq_lista_nomes.readlines()
-        return lista_arquivo
-    #carrega os nomes do arquivo txt
+    
+    def limpa_string_nome(self, lista_nomes):
+        nova_lista_nomes = []
+        for nome in lista_nomes:
+            novo_nome = re.sub('\n', '', nome)
+            nova_lista_nomes.append(novo_nome)
+        print(nova_lista_nomes)
+        return nova_lista_nomes
+    
     def carrega_nome(self):
         lista_nomes = self.carrega_arquivo('nomes.txt')
         return lista_nomes
@@ -26,9 +31,17 @@ class GeraValores:
         nome = sobrenomes[random.randint(0, len(sobrenomes)-1)]
         return nome
 
+    def carrega_arquivo(self, arquivo):
+        with open(arquivo, 'r') as arq_lista_nomes:
+            lista_arquivo = arq_lista_nomes.readlines()
+        lista_arquivo = self.limpa_string_nome(lista_arquivo)
+        return lista_arquivo
+    #carrega os nomes do arquivo txt
+
 def main():
     gv = GeraValores()
-    print(gv.gera_nome(), gv.gera_sobrenome())
+    nome_completo = gv.gera_nome() + ' ' + gv.gera_sobrenome()
+    print(nome_completo)
 
 if __name__ == "__main__":
     main()
