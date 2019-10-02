@@ -12,7 +12,7 @@ def busca(lista, elemento):
             else:
                 primeiro = meio + 1
     return False
-                
+'''                
 def test():
     print("teste 1: busca(['a', 'e', 'i'], 'e')")
     print(busca(['a', 'e', 'i'], 'e'))
@@ -22,5 +22,5 @@ def test():
     print(busca([1, 2, 3, 4, 5, 6], 4))
     
 test()
-    
+'''    
     
