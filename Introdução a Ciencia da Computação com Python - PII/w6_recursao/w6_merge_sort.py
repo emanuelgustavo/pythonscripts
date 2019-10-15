@@ -24,9 +24,10 @@ def merge(lado_esquerdo, lado_direito):
     return [lado_direito[0]] + merge(lado_esquerdo, lado_direito[1:0])
 
 def teste():
-    numeros = [random.randint(0,10) for x in range(10)]
+    numeros = [5,6,8,1,3,5,7,9]
     print(numeros)
-    merge_sort(numeros)
+    numeros = merge_sort(numeros)
+    print(numeros)
     
 teste()
     
