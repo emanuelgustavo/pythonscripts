@@ -2,6 +2,7 @@
 '''
 import random
 import re
+import io
 
 class GeraValores:
     
@@ -47,12 +48,25 @@ class GeraValores:
             return random.randint(13,19)
         else:
             return random.randint(0,12)
+        
+    def gera_nome_filho(self, quantidade_filhos):
+        nome_filhos = []
+        if quantidade_filhos > 0:
+            for filho in range(quantidade_filhos):
+                nome_filhos.append(self.gera_nome())
+            return nome_filhos
+        else:
+            return None
 
     #carrega os nomes do arquivo txt
     def carrega_arquivo(self, arquivo):
-        with open(arquivo, 'r') as arq_lista_nomes:
+        '''with open(arquivo, 'r') as arq_lista_nomes:
             lista_arquivo = arq_lista_nomes.readlines()
         lista_arquivo = self.limpa_string_nome(lista_arquivo)
+        '''
+        lista_arquivo = []
+        for line in io.open(arquivo, encoding="ISO-8859-1"):
+            lista_arquivo.append(line)
         return lista_arquivo
     
 def main():
@@ -60,7 +74,8 @@ def main():
     nome_completo = gv.gera_nome() + ' ' + gv.gera_sobrenome()
     telefone = gv.gera_numero_telefone()
     idade = gv.gera_idade('adulto')
-    print(nome_completo, telefone, idade)
+    filhos = gv.gera_nome_filho(random.randint(0,10))
+    print(nome_completo, telefone, idade, filhos)
 
 if __name__ == "__main__":
     main()
