@@ -1,9 +1,7 @@
 def incomodam(n):
-    if n < 0:
-        return ''
-    if n > 0:
-        if n == 1:
-            return 'incomoda '    
+    if n == 1:
+        return 'incomodam '
+    if n > 1:   
         return 'incomodam ' + incomodam(n-1)
     
 def elefantes(n, string=''):
@@ -11,10 +9,11 @@ def elefantes(n, string=''):
         return ''
     else:
         if n == 1:
-            string += ('Um elefante ' + incomodam(n) + 'muita gente\n') 
+            string += ('Um elefante incomoda muita gente\n') 
             return string
-        else:
+        else:            
+            string += ('{} elefantes '.format(n) + 'incomodam muito gente\n')
             string += ('{} elefantes '.format(n) + incomodam(n) + 'muito mais\n')
             return string + elefantes(n-1)
         
-print(elefantes(5))
+print(elefantes(3))
