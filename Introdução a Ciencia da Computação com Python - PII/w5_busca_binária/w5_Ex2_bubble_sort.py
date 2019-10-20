@@ -3,7 +3,7 @@ def bubble_sort(lista):
     first = True
     for i in range(fim-1, 0, -1):
         if first:
-            print(lista)
+            #print(lista)
             first = False
         for j in range(i):
             a = lista[j]
@@ -11,8 +11,7 @@ def bubble_sort(lista):
             if a > b:
                 lista[j] = b
                 lista[j+1] = a
-                print(lista) 
-    print(lista)                 
+                print(lista)   
     return lista
 '''
 def test():
